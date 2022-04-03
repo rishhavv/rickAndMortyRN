@@ -5,8 +5,6 @@ import {
   StatusBar,
   StyleSheet,
   ActivityIndicator,
-  Text,
-  TouchableOpacity,
   TouchableHighlight,
 } from 'react-native';
 import Header from '../Header';
@@ -24,13 +22,12 @@ import CharacterPageModal from '../characterPageModal/CharacterPageModal';
 const HomeScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [characterData, setCharacterData] = useState();
-  // const {HomePosts, errorMessage, HomeLoadingIndicator} = useGetProfile(page);
   const {loading, data, setPage, page} = useCharacterAPI();
 
   const renderActivityIndicator = () => {
     return (
       <View style={style.actIndicator}>
-        <ActivityIndicator size={50} color="#5667FF" />
+        <ActivityIndicator size={50} color="#78a660" />
       </View>
     );
   };
@@ -65,7 +62,7 @@ const HomeScreen = () => {
               </View>
             );
           }}
-          keyExtractor={(item, index) => {
+          _keyExtractor={(item, index) => {
             item.id;
           }}
         />
@@ -119,46 +116,9 @@ const style = StyleSheet.create({
     width: '100%',
     height: hp('98%'),
   },
-  flexRow: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
+
   justifyContentspaceBetween: {
     justifyContent: 'space-between',
-  },
-  buyHeader: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    marginBottom: hp('2%'),
-  },
-  fontMidSize: {
-    fontSize: 20,
-  },
-  buyButton: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: hp('1.5%'),
-    borderRadius: 8,
-    backgroundColor: '#5667FF',
-  },
-  textWhite: {
-    color: 'white',
-  },
-  indecbutton: {
-    backgroundColor: '#e3e3e3',
-    padding: 10,
-    borderRadius: 8,
-  },
-  flexGrow1: {
-    flexGrow: 1,
-    alignItems: 'center',
-  },
-  alignCenter: {
-    alignSelf: 'center',
-  },
-  mx2p: {
-    marginLeft: wp('2%'),
-    marginRight: wp('2%'),
   },
 });
 

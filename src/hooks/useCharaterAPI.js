@@ -10,64 +10,13 @@ const useCharacterAPI = () => {
     api
       .get(`/character/?page=${page}`, {})
       .then(
-        stuff => (
-          setData([...data, ...stuff.data.results]),
-          setLoading(false),
-          console.log('API FETCHED page-', page)
-        ),
+        stuff => (setData([...data, ...stuff.data.results]), setLoading(false)),
       )
       .catch(err => console.log('err    ', err, page));
   };
 
   useEffect(() => {
-    // fetchApi();
-    fetch('https://rickandmortyapi.com/graphql', {
-      method: 'POST',
-
-      headers: {
-        'Content-Type': 'application/json',
-      },
-
-      body: JSON.stringify({
-        query: `
-      query getCharacters {
-        characters(page:${page}) {
-          results {
-            name,
-            id,
-            status,
-            species,
-            gender,
-            image,
-            origin{
-              dimension,
-              name,
-              type,
-              residents {
-                name
-              }
-            }
-            episode {
-              name,
-              episode,
-              air_date
-            }
-          }
-        }
-      }
-    `,
-      }),
-    })
-      .then(res => res.json())
-      .then(
-        stuff => (
-          console.log('fetched Data', stuff.data.characters.results[0].image),
-          setData([...data, ...stuff.data.characters.results]),
-          setLoading(false),
-          console.log('API FETCHED page-', page)
-        ),
-      )
-      .catch(err => console.log(err));
+    fetchApi();
   }, [page]);
 
   return {loading, data, setPage, page};

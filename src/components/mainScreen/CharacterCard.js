@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -15,7 +15,7 @@ const CharacterCard = ({data}) => {
         <View style={[styles.flexRow, styles.justifySpaceBetween]}>
           <Text style={styles.cardName}>{data.item.name}</Text>
         </View>
-        <View style={[styles.flexRow, styles.flexwrap]}>
+        <View style={[styles.flexRow, styles.flexwrap, styles.mt20]}>
           <View
             style={[
               styles.speciesStyle,
@@ -88,14 +88,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: '#dbffc7',
   },
-  background: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    height: hp('70%'),
-    borderRadius: 30,
-  },
   cardImageContainer: {
     display: 'flex',
     flexDirection: 'row',
@@ -115,19 +107,12 @@ const styles = StyleSheet.create({
   },
   cardName: {
     fontWeight: 'bold',
-    fontSize: 22,
+    fontSize: 24,
     marginBottom: hp('1%'),
     color: '#000000',
   },
-  textLight: {
-    color: '#000000',
-    fontSize: 13,
-  },
-  textWhite: {
-    color: 'white',
-  },
   textMediumDark: {
-    fontSize: 15,
+    fontSize: 17,
     fontWeight: 'bold',
     marginBottom: hp('1%'),
   },
@@ -142,12 +127,12 @@ const styles = StyleSheet.create({
   },
   greenText: {
     color: 'green',
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
   },
   redText: {
     color: 'red',
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
   },
   justifyContentFlexEnd: {
@@ -163,7 +148,7 @@ const styles = StyleSheet.create({
   },
   boldBold: {
     color: '#000000',
-    fontSize: 13,
+    fontSize: 15,
     fontWeight: 'bold',
   },
   unknownStyle: {
