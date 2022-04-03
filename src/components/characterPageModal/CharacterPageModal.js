@@ -15,84 +15,47 @@ import {
 import api from '../../api/axiosConfig';
 
 const CharacterPageModal = data => {
-  const [originData, setOriginData] = useState();
-
   return (
     <View>
       <Header />
 
-      <ScrollView style={styles.container}>
+      <View style={styles.container}>
         <View style={styles.cardImageContainer}>
           <Image source={{uri: data?.data?.image}} style={styles.imageStyle} />
-        </View>
-        <View style={[styles.flexRow, styles.flexjustifyCenter]}>
-          <Text style={styles.cardName}>{data.data.name}</Text>
-        </View>
-        <View style={[styles.flexRow, styles.flexwrap]}>
-          <View
-            style={[
-              styles.speciesStyle,
-              styles.flexRow,
-              styles.mr2,
-              styles.mb1,
-            ]}>
-            <Text style={[styles.textLight]}>Species: </Text>
-            <Text style={[styles.boldBold]}>{data?.data?.species}</Text>
-          </View>
-          <View
-            style={[
-              styles.flexRow,
-              styles.mr2,
-              styles.mb1,
-              styles.flexStart,
-              data?.data?.gender === 'Male'
-                ? styles.blueGenderStyle
-                : data?.data?.gender === 'Female'
-                ? styles.pinkGenderStyle
-                : styles.unknownStyle,
-            ]}>
-            <Text style={[styles.textLight]}>Gender: </Text>
-            <Text style={[styles.boldBold]}>{data?.data?.gender}</Text>
-          </View>
-          <View
-            style={[
-              data.data.status == 'Alive'
-                ? styles.greenAlive
-                : data.data.status == 'Dead'
-                ? styles.redDead
-                : styles.unknownStyle,
-              styles.mr2,
-              styles.mb1,
-              styles.flexRow,
-            ]}>
-            <Text style={styles.textLight}>Status: </Text>
-            <Text style={styles.boldBold}>
-              {data.data.status === 'unknown' ? 'NA' : data.data.status}
-            </Text>
+          <View style={[styles.ml2]}>
+            <Text style={styles.cardName}>{data?.data?.name}</Text>
+            <View>
+              <Text>Origin</Text>
+              <Text style={[styles.bold]}>{data?.data?.origin?.name}</Text>
+            </View>
+            <View>
+              <Text>Dimentions </Text>
+              <Text style={[styles.bold]}>{data?.data?.origin?.dimension}</Text>
+            </View>
+            <View style={[styles.flexRow, styles.justifySpaceBetween]}>
+              <View>
+                <Text>Type </Text>
+                <Text style={[styles.bold]}>{data?.data?.origin?.type}</Text>
+              </View>
+              <View>
+                <Text>Residents </Text>
+                <Text style={[styles.bold]}>
+                  {data?.data?.origin?.residents?.length}
+                </Text>
+              </View>
+            </View>
           </View>
         </View>
-        <View
-          style={[
-            styles.flexRow,
-            styles.mb1,
-            data?.data?.origin.name === 'unknown'
-              ? styles.unknownStyle
-              : styles.originStyle,
-          ]}>
-          <Text style={[styles.textLight]}>Origin:{'  '}</Text>
-          <Text style={[styles.textLight, styles.bold]}>
-            {data?.data?.origin?.name}
-          </Text>
-        </View>
+
         <View style={styles.mt20}>
           <Text style={styles.cardName}>
             Featured in {data?.data?.episode?.length} episodes!
           </Text>
         </View>
-        <View>
+        <View style={styles.flatList}>
           <FlatList
             data={data?.data?.episode}
-            nestedScrollEnabled={true}
+            nestedScrollEnabled
             showsVerticalScrollIndicator={false}
             contentInset={{
               left: 0,
@@ -103,18 +66,29 @@ const CharacterPageModal = data => {
             renderItem={data => {
               return (
                 <View style={[styles.episodeContainer]}>
-                  <Text>
-                    {data.item.split('/')[data.item.split('/').length - 1]}
+                  <View style={[styles.flexRow, styles.justifySpaceBetween]}>
+                    <Text style={[styles.textLight]}>{data?.item?.name}</Text>
+                    <Text style={[styles.textLight]}>
+                      {data?.item?.air_date}
+                    </Text>
+                  </View>
+                  <Text
+                    style={[
+                      styles.flexRow,
+                      styles.justifySpaceBetween,
+                      styles.textLight,
+                    ]}>
+                    {data.item.episode}
                   </Text>
                 </View>
               );
             }}
             keyExtractor={(item, index) => {
-              item.id;
+              item.episode;
             }}
           />
         </View>
-      </ScrollView>
+      </View>
     </View>
   );
 };
@@ -139,15 +113,16 @@ const styles = StyleSheet.create({
   cardImageContainer: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     marginBottom: wp('3%'),
   },
   imageStyle: {
     aspectRatio: 2 / 2,
-    width: '100%',
+    width: '40%',
   },
   bold: {
     fontWeight: 'bold',
+    color: 'black',
   },
   flexRow: {
     display: 'flex',
@@ -231,8 +206,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#ff5454',
     padding: 5,
   },
-  mr2: {
-    marginRight: wp('2%'),
+  ml2: {
+    marginLeft: wp('2%'),
   },
   originStyle: {
     borderRadius: 10,
@@ -248,7 +223,12 @@ const styles = StyleSheet.create({
   episodeContainer: {
     borderWidth: 1,
     marginBottom: hp('1%'),
-    padding: 7,
+    padding: 10,
+    backgroundColor: 'white',
+  },
+  flatList: {
+    marginBottom: 400,
+    height: hp('55%'),
   },
 });
 

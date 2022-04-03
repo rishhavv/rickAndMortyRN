@@ -61,13 +61,15 @@ const CharacterCard = ({data}) => {
             style={[
               styles.flexRow,
               styles.mb1,
-              data?.item?.origin.name === 'unknown'
+              data?.item?.origin?.name == null
                 ? styles.unknownStyle
                 : styles.originStyle,
             ]}>
             <Text style={[styles.textLight]}>Origin:{'  '}</Text>
             <Text style={[styles.textLight, styles.bold]}>
-              {data?.item?.origin?.name}
+              {data?.item?.origin?.name == null
+                ? 'unknown'
+                : data?.item?.origin?.name}
             </Text>
           </View>
         </View>

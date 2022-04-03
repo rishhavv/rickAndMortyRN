@@ -17,7 +17,6 @@ import {
 } from 'react-native-responsive-screen';
 
 import Modal from 'react-native-modal';
-import useGetProfile from '../../hooks/useGetProfile';
 import useCharacterAPI from '../../hooks/useCharaterAPI';
 import CharacterCard from './CharacterCard';
 import CharacterPageModal from '../characterPageModal/CharacterPageModal';
@@ -70,7 +69,6 @@ const HomeScreen = () => {
             item.id;
           }}
         />
-        <Text>hbfdjhsb</Text>
         <Modal
           animationType="slide"
           transparent={true}
@@ -91,7 +89,7 @@ const HomeScreen = () => {
     <View>
       <StatusBar animated={true} backgroundColor="#78a660" hidden={false} />
       <Header />
-      {true ? renderCards() : renderActivityIndicator()}
+      {loading ? renderActivityIndicator() : renderCards()}
     </View>
   );
 };
