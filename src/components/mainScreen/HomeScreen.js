@@ -1,4 +1,6 @@
-import React, {useEffect, useState} from 'react';
+//HomeScreen
+
+import React, {useState} from 'react';
 import {
   View,
   FlatList,
@@ -12,7 +14,7 @@ import Header from '../Header';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+} from 'react-native-responsive-screen'; //for responsive UI
 
 import Modal from 'react-native-modal';
 import useCharacterAPI from '../../hooks/useCharaterAPI';
@@ -22,8 +24,9 @@ import CharacterPageModal from '../characterPageModal/CharacterPageModal';
 const HomeScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [characterData, setCharacterData] = useState();
-  const {loading, data, setPage, page} = useCharacterAPI();
+  const {loading, data, setPage, page} = useCharacterAPI(); //fetch characters custom hook
 
+  //activity Indicator
   const renderActivityIndicator = () => {
     return (
       <View style={style.actIndicator}>
@@ -31,11 +34,15 @@ const HomeScreen = () => {
       </View>
     );
   };
-  const handleClick = data => {
-    setCharacterData(data);
+
+  //Handle Tap on the characterCard
+
+  const handleTap = d => {
+    setCharacterData(d);
     setModalVisible(!modalVisible);
   };
 
+  //render list of characters
   const renderCards = () => {
     return (
       <View style={style.container}>
@@ -45,7 +52,7 @@ const HomeScreen = () => {
           snapToInterval={hp('70%') + hp('3%')}
           snapToAlignment={'center'}
           showsVerticalScrollIndicator={false}
-          onEndReachedThreshold={4}
+          onEndReachedThreshold={8}
           onEndReached={() => setPage(page + 1)}
           contentInset={{
             left: 0,
@@ -53,11 +60,11 @@ const HomeScreen = () => {
             right: 0,
             bottom: 30,
           }}
-          renderItem={data => {
+          renderItem={ele => {
             return (
               <View style={style.card}>
-                <TouchableHighlight onPress={() => handleClick(data.item)}>
-                  <CharacterCard data={data} />
+                <TouchableHighlight onPress={() => handleTap(ele.item)}>
+                  <CharacterCard data={ele} />
                 </TouchableHighlight>
               </View>
             );
@@ -82,6 +89,8 @@ const HomeScreen = () => {
     );
   };
 
+  //homescreen return
+
   return (
     <View>
       <StatusBar animated={true} backgroundColor="#78a660" hidden={false} />
@@ -90,6 +99,8 @@ const HomeScreen = () => {
     </View>
   );
 };
+
+//stylesheet
 
 const style = StyleSheet.create({
   card: {

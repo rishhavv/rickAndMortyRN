@@ -1,5 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+//Character Card in HomeScreen flatList
+
+import React from 'react';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -15,7 +17,7 @@ const CharacterCard = ({data}) => {
         <View style={[styles.flexRow, styles.justifySpaceBetween]}>
           <Text style={styles.cardName}>{data.item.name}</Text>
         </View>
-        <View style={[styles.flexRow, styles.flexwrap, styles.mt20]}>
+        <View style={[styles.flexRow, styles.flexwrap]}>
           <View
             style={[
               styles.speciesStyle,
@@ -43,9 +45,9 @@ const CharacterCard = ({data}) => {
           </View>
           <View
             style={[
-              data.item.status == 'Alive'
+              data.item.status === 'Alive'
                 ? styles.greenAlive
-                : data.item.status == 'Dead'
+                : data.item.status === 'Dead'
                 ? styles.redDead
                 : styles.unknownStyle,
               styles.mr2,
@@ -66,7 +68,9 @@ const CharacterCard = ({data}) => {
                 : styles.originStyle,
             ]}>
             <Text style={[styles.textLight]}>Origin:{'  '}</Text>
-            <Text style={[styles.textLight, styles.bold]}>
+            <Text
+              numberOfLines={1}
+              style={[styles.textLight, styles.boldBold, styles.maxWidth]}>
               {data?.item?.origin?.name == null
                 ? 'unknown'
                 : data?.item?.origin?.name}
@@ -77,6 +81,8 @@ const CharacterCard = ({data}) => {
     </View>
   );
 };
+
+//stylesheet
 
 const styles = StyleSheet.create({
   container: {
@@ -186,6 +192,9 @@ const styles = StyleSheet.create({
   },
   flexwrap: {
     flexWrap: 'wrap',
+  },
+  maxWidth: {
+    maxWidth: '60%',
   },
 });
 

@@ -1,12 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  ScrollView,
-  FlatList,
-} from 'react-native';
+//Character Page modal - Opens when you click on a card from homescreen
+//Episode and Origin Detains
+
+import React, {useEffect} from 'react';
+import {View, Text, Image, StyleSheet, FlatList} from 'react-native';
 import Header from '../Header';
 import {
   widthPercentageToDP as wp,
@@ -16,22 +12,28 @@ import useEpisodeHook from '../../hooks/useEpisodeHook';
 import useLocationHook from '../../hooks/useLocationHook';
 
 const CharacterPageModal = data => {
-  const {loading, episodes, setQuery} = useEpisodeHook();
+  const {loading, episodes, setQuery} = useEpisodeHook(); //Get Episode details hook
+
+  // Get Character's origin information
   const {location} = useLocationHook(
     data?.data?.origin?.url.split('/')[
       data?.data?.origin?.url.split('/').length - 1
     ],
   );
-  const [epList, setEpList] = useState([]);
+
+  //Sets useEpisodeHook API call parameters
   useEffect(() => {
+    const querySetter = async () => {
+      const temp = await data.data.episode.map((itr, index) => {
+        return Number(itr.split('/')[itr.split('/').length - 1]);
+      });
+      setQuery(temp);
+    };
     querySetter();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
-  const querySetter = async () => {
-    const temp = await data.data.episode.map((itr, index) => {
-      return Number(itr.split('/')[itr.split('/').length - 1]);
-    });
-    setQuery(temp);
-  };
+
+  // return Modal View
   return (
     <View>
       <Header />
@@ -42,26 +44,26 @@ const CharacterPageModal = data => {
           <View style={[styles.ml2]}>
             <Text style={styles.cardName}>{data?.data?.name}</Text>
             <View>
-              <Text>Origin</Text>
+              <Text style={[styles.blacktext]}>Origin</Text>
               <Text style={[styles.bold]}>
                 {location ? location.name : 'unknown'}
               </Text>
             </View>
             <View>
-              <Text>Dimentions </Text>
+              <Text style={[styles.blacktext]}>Dimentions </Text>
               <Text style={[styles.bold]}>
                 {location ? location.dimension : 'NA'}
               </Text>
             </View>
             <View style={[styles.flexRow, styles.justifySpaceBetween]}>
               <View>
-                <Text>Type </Text>
+                <Text style={[styles.blacktext]}>Type </Text>
                 <Text style={[styles.bold]}>
                   {location ? location.type : 'NA'}
                 </Text>
               </View>
               <View>
-                <Text>Residents </Text>
+                <Text style={[styles.blacktext]}>Residents </Text>
                 <Text style={[styles.bold]}>
                   {location ? location?.residents?.length : 'NA'}
                 </Text>
@@ -87,13 +89,13 @@ const CharacterPageModal = data => {
               right: 0,
               bottom: 30,
             }}
-            renderItem={data => {
+            renderItem={item => {
               return (
                 <View style={[styles.episodeContainer]}>
                   <View style={[styles.flexRow, styles.justifySpaceBetween]}>
-                    <Text style={[styles.textLight]}>{data?.item?.name}</Text>
+                    <Text style={[styles.textLight]}>{item?.item?.name}</Text>
                     <Text style={[styles.textLight]}>
-                      {data?.item?.air_date}
+                      {item?.item?.air_date}
                     </Text>
                   </View>
                   <Text
@@ -102,7 +104,7 @@ const CharacterPageModal = data => {
                       styles.justifySpaceBetween,
                       styles.textLight,
                     ]}>
-                    {data.item.episode}
+                    {item.item.episode}
                   </Text>
                 </View>
               );
@@ -116,6 +118,8 @@ const CharacterPageModal = data => {
     </View>
   );
 };
+
+//stylesheet
 
 const styles = StyleSheet.create({
   container: {
@@ -210,6 +214,9 @@ const styles = StyleSheet.create({
   flatList: {
     marginBottom: 400,
     height: hp('55%'),
+  },
+  blacktext: {
+    color: 'black',
   },
 });
 
