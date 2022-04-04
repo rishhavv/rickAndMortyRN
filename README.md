@@ -1,5 +1,5 @@
 # Rick and Morty app based on React Native
-ScreenRecord : [SQL-Editor](https://drive.google.com/drive/folders/1Wuya4EyXZEf8DGh_uJO-0PHyViWcb-rz?usp=sharing)
+ScreenRecord : [G-Drive](https://drive.google.com/drive/folders/1Wuya4EyXZEf8DGh_uJO-0PHyViWcb-rz?usp=sharing)
 
 ![Landing Page](./assests/screenshot/ss.jpg.jpg)
 
